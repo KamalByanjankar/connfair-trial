@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import './Information.css';
 import SearchIcon from '@material-ui/icons/Search';
+import PopUp from '../PopUp/PopUp';
 
 const base_URL = "https://jsonplaceholder.typicode.com/users";
 
 function Information() {
     const [users, setUsers] = useState([]);
     const [searchInput, setSearchInput] = useState("")
+    const [popUp, setPopUp] = useState(false)
+
 
     //fetch data using axios from an API
     useEffect(() => {
@@ -25,29 +28,44 @@ function Information() {
         getDataFromAPI()
     }, [])
 
-    const popUpHandler = (id) => {
+
+    //refreshing the page
+    const refreshPage = () => {
+        window.location.reload()
+    }
+
+    //toggle dialog box
+    const togglePopUp = () => {
+        setPopUp(!popUp)
+    }
+
+    //pop up dialog box
+    const deleteUserHandler = (id) => {
         // alert('clicked')
         const newUserList = users.filter((user) => user.id !== id)
-
         setUsers(newUserList)
+        togglePopUp()
     }
 
+    //Search in the table
     const handleSearch = (e) => {
         e.preventDefault();
-        setSearchInput(e.target.value)
     }
+
+    
 
     return (
         <div className="information">
         
-            <button>Refresh</button>
+            <button onClick={refreshPage}>Refresh</button>
 
             <form onSubmit = {handleSearch} className="information__search">
                 <input 
                     className="information__searchInput"
                     type="text" 
                     value={searchInput}
-                    onChange={handleSearch}
+                    autoFocus
+                    onChange={(e) => setSearchInput(e.target.value)}
                 />
                 <SearchIcon onClick={handleSearch} className="information__searchIcon" />
             </form>
@@ -73,13 +91,11 @@ function Information() {
                 <tbody>
                     {
                         users
-                        
                         .filter(value => {
                             return(
                                 value.name.toLowerCase().includes(searchInput.toLowerCase())
                             )
                         })
-                        
                         .map((user, i) => {
                             return(
                                 <tr key={user.id}>
@@ -90,19 +106,21 @@ function Information() {
                                     <td>{user.address.city}</td>
                                     <td>{user.company.name}</td>
                                     <td>
-                                        <button onClick={() => popUpHandler(user.id)}>
+                                        <button onClick={togglePopUp}>
                                             Delete
                                         </button>
                                     </td>
                                 </tr> 
                             )
                         })
-                    }
-                   
-                       
+                    }  
                 </tbody>      
+                 
             </table>
-
+            
+            {
+                popUp ? <PopUp deleteUser={() => deleteUserHandler()} toggle={togglePopUp} user={users}/> : null
+            } 
         </div>
     )
 }
