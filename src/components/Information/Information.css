@@ -1,0 +1,54 @@
+.information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.information > h1 {
+  margin: 10px 0;
+}
+
+.information > table {
+  margin: 30px 0;
+}
+
+.information > table > thead > tr {
+  background-color: lightgray;
+}
+
+.information > table > thead > tr > td {
+  font-weight: bold;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.information > table > thead > tr > th {
+  vertical-align: top;
+  font-size: 20px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.information > table > tbody > tr > td {
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  font-size: 16px;
+}
+
+button {
+  background-color: red;
+  border: 1px solid red;
+  padding: 4px 8px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(255, 86, 86);
+}
