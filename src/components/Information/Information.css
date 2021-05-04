@@ -5,10 +5,6 @@
   margin: 20px;
 }
 
-.information > h1 {
-  margin: 10px 0;
-}
-
 .information > table {
   margin: 30px 0;
 }
@@ -51,4 +47,33 @@ button {
 
 button:hover {
   background-color: rgb(255, 86, 86);
+}
+
+.information__search {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.information__searchInput {
+  width: 40vw;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  border: 1px solid black;
+  height: 30px;
+}
+
+.information__searchIcon {
+  background-color: black;
+  color: white;
+  height: 30px;
+  padding: 9px;
+  border-radius: 0 5px 5px 0;
+}
+
+.information__searchIcon:hover {
+  cursor: pointer;
+  background-color: rgb(44, 43, 43);
 }

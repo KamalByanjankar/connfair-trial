@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import './Information.css';
+import SearchIcon from '@material-ui/icons/Search';
 
 const base_URL = "https://jsonplaceholder.typicode.com/users";
 
 function Information() {
     const [users, setUsers] = useState([]);
+    const [searchInput, setSearchInput] = useState("")
 
     //fetch data using axios from an API
     useEffect(() => {
@@ -24,14 +26,32 @@ function Information() {
     }, [])
 
     const popUpHandler = (id) => {
-        alert('clicked')
+        // alert('clicked')
+        const newUserList = users.filter((user) => user.id !== id)
+
+        setUsers(newUserList)
+    }
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearchInput(e.target.value)
     }
 
     return (
         <div className="information">
-            <h1>List</h1>
-
+        
             <button>Refresh</button>
+
+            <form onSubmit = {handleSearch} className="information__search">
+                <input 
+                    className="information__searchInput"
+                    type="text" 
+                    value={searchInput}
+                    onChange={handleSearch}
+                />
+                <SearchIcon onClick={handleSearch} className="information__searchIcon" />
+            </form>
+            
             
             <table>
                 <thead>
@@ -52,7 +72,15 @@ function Information() {
 
                 <tbody>
                     {
-                        users.map((user, i) => {
+                        users
+                        
+                        .filter(value => {
+                            return(
+                                value.name.toLowerCase().includes(searchInput.toLowerCase())
+                            )
+                        })
+                        
+                        .map((user, i) => {
                             return(
                                 <tr key={user.id}>
                                     <td>{user.name}</td>
