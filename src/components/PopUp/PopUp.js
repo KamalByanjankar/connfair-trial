@@ -2,6 +2,7 @@ import React from 'react'
 import './PopUp.css'
 
 function PopUp({deleteUser, toggle}) {
+  console.log("Inside pop up")
   return (
       <div className="popup">
         <div className="popup__content">

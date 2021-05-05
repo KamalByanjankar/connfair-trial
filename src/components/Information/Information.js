@@ -10,6 +10,7 @@ function Information() {
     const [users, setUsers] = useState([]);
     const [searchInput, setSearchInput] = useState("")
     const [popUp, setPopUp] = useState(false)
+    const [userId, setUserId] = useState(0)
 
 
     //fetch data using axios from an API
@@ -35,13 +36,14 @@ function Information() {
     }
 
     //toggle dialog box
-    const togglePopUp = () => {
+    const togglePopUp = (id) => {
         setPopUp(!popUp)
+        setUserId(id)
     }
 
-    //pop up dialog box
+    //delete user from table
     const deleteUserHandler = (id) => {
-        // alert('clicked')
+        console.log("Inside delete user handler ", id)
         const newUserList = users.filter((user) => user.id !== id)
         setUsers(newUserList)
         togglePopUp()
@@ -106,21 +108,32 @@ function Information() {
                                     <td>{user.address.city}</td>
                                     <td>{user.company.name}</td>
                                     <td>
-                                        <button onClick={togglePopUp}>
+                                        <button 
+                                            onClick={()=> togglePopUp(user.id)}
+                                        >
                                             Delete
                                         </button>
                                     </td>
+                                    {/* <td     
+                                        onClick={() => {
+                                            const confirmBox = window.confirm("Do you really want to delete the user?")
+
+                                            if (confirmBox === true){
+                                                deleteUserHandler(user.id)
+                                            }
+                                        }}
+                                        >
+                                        Delete
+                                    </td> */}
                                 </tr> 
                             )
                         })
                     }  
                 </tbody>      
-                 
-            </table>
-            
+            </table> 
             {
-                popUp ? <PopUp deleteUser={() => deleteUserHandler()} toggle={togglePopUp} user={users}/> : null
-            } 
+                popUp ? <PopUp deleteUser={() => deleteUserHandler(userId)} toggle={togglePopUp} /> : null
+            }
         </div>
     )
 }
