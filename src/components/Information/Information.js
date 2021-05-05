@@ -11,6 +11,7 @@ function Information() {
     const [searchInput, setSearchInput] = useState("")
     const [popUp, setPopUp] = useState(false)
     const [userId, setUserId] = useState(0)
+    const [query, setQuery] = useState("")
 
 
     //fetch data using axios from an API
@@ -28,6 +29,12 @@ function Information() {
         
         getDataFromAPI()
     }, [])
+
+    //add delay of 500ms after search
+    useEffect(() => {
+        const timeOutId = setTimeout(() => setSearchInput(query), 500);
+        return () => clearTimeout(timeOutId);
+      }, [query]);
 
 
     //refreshing the page
@@ -65,9 +72,9 @@ function Information() {
                 <input 
                     className="information__searchInput"
                     type="text" 
-                    value={searchInput}
+                    value={query}
                     autoFocus
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    onChange={(e) => setQuery(e.target.value)}
                 />
                 <SearchIcon onClick={handleSearch} className="information__searchIcon" />
             </form>
